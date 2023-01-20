@@ -184,7 +184,8 @@ class TextGenerator(keras.callbacks.Callback):
 
     def detokenize(self, number):
         return self.index_to_word[number]
-
+    
+    # epoch traning end here
     def on_epoch_end(self, epoch, logs=None):
         start_tokens = [_ for _ in self.start_tokens]
         if (epoch + 1) % self.print_every != 0:
@@ -225,6 +226,10 @@ text_gen_callback = TextGenerator(num_tokens_generated, start_tokens, vocab)
 # Train the model
 model = create_model()
 model.fit(text_ds, verbose=2, epochs=25, callbacks=[text_gen_callback])
+
+# Save the model
+model.save("text_generator")
+
 
 
     
